@@ -80,4 +80,11 @@ Visit app at: **[http://localhost:3000](http://localhost:3000)**
 This project was developed for the **Murf AI Hackathon** to demonstrate the feasibility of ultra-fast multilingual AI assistants in the Indian market, bridging the gap for the "next billion users" through voice.
 
 ---
-*Created by [Anand Mahadev](https://github.com/anandmahadev).*
+
+## 🚀 Next Steps
+- [ ] **Conversational Memory**: Add Redis/Database support for session-based AI memory.
+- [ ] **Streaming Transcription**: Implement WebSockets for real-time speech feedback.
+- [ ] **Advanced Voice Cloning**: Use Murf's premium voice cloning for personalized UX.
+
+---
+*Created by [Anand Mahadev](https://github.com/anandmahadev) for Murf AI Hackathon 2026.*
