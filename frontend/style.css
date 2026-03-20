@@ -388,12 +388,14 @@ body {
   border-radius: var(--radius-sm);
   padding: var(--space-sm) var(--space-md);
   text-align: center;
-  transition: border-color var(--transition-mid), box-shadow var(--transition-mid);
+  transition: all var(--transition-mid);
 }
 
 .stat-card:hover {
-  border-color: var(--clr-border-hi);
-  box-shadow: var(--shadow-card);
+  border-color: var(--clr-primary-lt);
+  background: rgba(124,58,237,0.08);
+  box-shadow: var(--shadow-glow-primary);
+  transform: translateY(-2px);
 }
 
 .stat-value {
