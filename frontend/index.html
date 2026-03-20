@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoxAI – Multilingual Voice Assistant | Powered by Murf AI</title>
+  <meta name="description" content="Real-time multilingual AI voice assistant supporting Hindi and English, powered by Murf AI Falcon model with ultra-low latency." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-canvas" id="bgCanvas">
+    <canvas id="particleCanvas"></canvas>
+  </div>
+
+  <!-- App Shell -->
+  <div class="app-shell">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="20" fill="url(#logoGrad)"/>
+            <path d="M13 16.5C13 14.01 15.01 12 17.5 12h5C24.99 12 27 14.01 27 16.5v7C27 25.99 24.99 28 22.5 28h-5C15.01 28 13 25.99 13 23.5v-7z" fill="white" opacity="0.9"/>
+            <path d="M20 14.5v11M17 17.5v5M23 17.5v5M14.5 20h11" stroke="#6C63FF" stroke-width="1.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#7C3AED"/>
+                <stop offset="100%" stop-color="#06B6D4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <h1 class="logo-name">VoxAI</h1>
+          <p class="logo-tagline">Powered by Murf AI</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-live" id="statusBadge">
+          <span class="pulse-dot"></span> LIVE
+        </span>
+        <span class="badge badge-falcon">🦅 Falcon Model</span>
+        <span class="badge badge-lang">🇮🇳 Hindi + English</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+
+      <!-- Left: Controls Panel -->
+      <aside class="controls-panel glass-card" id="controlsPanel">
+
+        <section class="panel-section">
+          <h2 class="section-title">🎙️ Voice Settings</h2>
+
+          <div class="control-group">
+            <label class="control-label" for="langSelect">Language</label>
+            <div class="select-wrapper">
+              <select id="langSelect">
+                <option value="en-US">🇺🇸 English (US)</option>
+                <option value="en-IN">🇮🇳 English (India)</option>
+                <option value="hi-IN" selected>🇮🇳 Hindi</option>
+                <option value="multilingual">🌐 Multilingual (Hindi + English)</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="voiceSelect">Voice</label>
+            <div class="select-wrapper">
+              <select id="voiceSelect">
+                <option value="loading" disabled>Loading voices…</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="modelSelect">Model</label>
+            <div class="select-wrapper">
+              <select id="modelSelect">
+                <option value="GEN2">Gen2 – Studio Quality</option>
+                <option value="FALCON">🦅 Falcon – Ultra Fast (&lt;130ms)</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="styleSelect">Speaking Style</label>
+            <div class="select-wrapper">
+              <select id="styleSelect">
+                <option value="Conversational">Conversational</option>
+                <option value="Promo">Promo</option>
+                <option value="Newscast">Newscast</option>
+                <option value="Calm">Calm</option>
+                <option value="Inspirational">Inspirational</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="section-title">⚡ Stats</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value" id="statLatency">—</div>
+              <div class="stat-label">Latency (ms)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="statRequests">0</div>
+              <div class="stat-label">Requests</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="statChars">0</div>
+              <div class="stat-label">Chars Spoken</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="statLang">—</div>
+              <div class="stat-label">Auto-detect</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- API Configuration removed because key is managed on backend -->
+
+
+        <!-- Quick Phrase Buttons -->
+        <section class="panel-section">
+          <h2 class="section-title">💬 Quick Phrases</h2>
+          <div class="quick-phrases">
+            <button class="phrase-btn" data-text="Namaste! Main aapki kaise madad kar sakta hoon?" data-lang="hi-IN">🙏 Namaste</button>
+            <button class="phrase-btn" data-text="Hello! How can I help you today?" data-lang="en-US">👋 Hello</button>
+            <button class="phrase-btn" data-text="Aaj ka mausam bahut sundar hai. Today the weather is beautiful!" data-lang="multilingual">🌤️ Hinglish</button>
+            <button class="phrase-btn" data-text="मुझे बहुत खुशी है कि आप यहाँ हैं। I am very happy you are here!" data-lang="multilingual">❤️ Mixed</button>
+          </div>
+        </section>
+
+      </aside>
+
+      <!-- Center: Main Chat + Visualizer -->
+      <section class="center-panel">
+
+        <!-- Waveform Visualizer -->
+        <div class="visualizer-container" id="visualizerContainer">
+          <canvas id="waveCanvas" class="wave-visualizer"></canvas>
+          <div class="visualizer-overlay">
+            <div class="orb" id="mainOrb">
+              <div class="orb-inner">
+                <svg viewBox="0 0 80 80" class="mic-icon">
+                  <circle cx="40" cy="40" r="28" fill="rgba(108,99,255,0.15)" />
+                  <rect x="27" y="14" width="26" height="34" rx="13" fill="url(#micGrad)"/>
+                  <path d="M21 40c0 10.5 8.5 19 19 19s19-8.5 19-19" stroke="url(#micGrad2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <line x1="40" y1="59" x2="40" y2="66" stroke="url(#micGrad2)" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="30" y1="66" x2="50" y2="66" stroke="url(#micGrad2)" stroke-width="3" stroke-linecap="round"/>
+                  <defs>
+                    <linearGradient id="micGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#a78bfa"/>
+                      <stop offset="100%" stop-color="#6C63FF"/>
+                    </linearGradient>
+                    <linearGradient id="micGrad2" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#06B6D4"/>
+                      <stop offset="100%" stop-color="#6C63FF"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <div class="orb-status" id="orbStatus">Ready to speak</div>
+          </div>
+        </div>
+
+        <!-- Chat History -->
+        <div class="chat-history" id="chatHistory">
+          <div class="chat-welcome">
+            <div class="welcome-emoji">🌟</div>
+            <h3>Welcome to VoxAI</h3>
+            <p>Type or speak a message below — I'll respond in your chosen language with a natural AI voice!</p>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area glass-card">
+          <div class="language-detect-pill" id="detectPill">
+            <span id="detectIcon">🌐</span>
+            <span id="detectLabel">Auto-detect</span>
+          </div>
+
+          <div class="textarea-wrapper">
+            <textarea
+              id="textInput"
+              placeholder="Type a message in Hindi, English, or both… (e.g. 'मुझे भूख लगी है, I want to eat something.')"
+              rows="3"
+              maxlength="3000"
+            ></textarea>
+            <div class="char-count"><span id="charCount">0</span> / 3000</div>
+          </div>
+
+          <div class="input-actions">
+            <button class="btn btn-ghost" id="micBtn" title="Voice Input (Speech-to-Text)">
+              <svg viewBox="0 0 24 24" class="btn-icon"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5 10c0 3.87 3.13 7 7 7s7-3.13 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Speak
+            </button>
+            <button class="btn btn-ghost" id="clearBtn" title="Clear text">
+              <svg viewBox="0 0 24 24" class="btn-icon"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Clear
+            </button>
+            <div class="flex-spacer"></div>
+            <button class="btn btn-primary" id="speakBtn">
+              <svg viewBox="0 0 24 24" class="btn-icon"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+              <span id="speakBtnText">Generate Voice</span>
+            </button>
+          </div>
+
+          <!-- Audio Player -->
+          <div class="audio-player" id="audioPlayer" style="display:none">
+            <div class="player-header">
+              <span class="player-title">🔊 Generated Audio</span>
+              <div class="player-meta" id="playerMeta"></div>
+            </div>
+            <audio id="audioElement" controls preload="auto"></audio>
+            <div class="player-actions">
+              <button class="btn btn-ghost btn-sm" id="downloadBtn">
+                <svg viewBox="0 0 24 24" class="btn-icon"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Download
+              </button>
+              <button class="btn btn-ghost btn-sm" id="replayBtn">
+                <svg viewBox="0 0 24 24" class="btn-icon"><polyline points="1 4 1 10 7 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.17" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                Replay
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Right: Conversation Log -->
+      <aside class="history-panel glass-card" id="historyPanel">
+        <div class="panel-header">
+          <h2 class="section-title">📜 Conversation</h2>
+          <button class="btn btn-ghost btn-sm" id="clearHistoryBtn" title="Clear history">Clear</button>
+        </div>
+        <div class="history-list" id="historyList">
+          <p class="history-empty">No conversation yet. Start speaking!</p>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
