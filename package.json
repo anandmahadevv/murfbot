@@ -1,0 +1,16 @@
+{
+  "name": "voxai-multilingual-voice-assistant",
+  "version": "1.0.0",
+  "description": "Real-time Multilingual AI Voice Assistant powered by Murf AI Falcon model",
+  "scripts": {
+    "dev": "vite frontend --port 3000 --open",
+    "build": "vite build frontend",
+    "preview": "vite preview",
+    "backend": "python backend/app.py",
+    "start": "concurrently \"npm run backend\" \"npm run dev\""
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "concurrently": "^9.1.0"
+  }
+}
