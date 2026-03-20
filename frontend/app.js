@@ -5,13 +5,14 @@
 
 "use strict";
 
-// ─── Configuration ─────────────────────────────────────
+// ─── Application Configuration ──────────────────────────
 const CONFIG = {
-  backendUrl: "",  // Empty = relative path, Vite proxies /api → http://localhost:5000
+  backendUrl: "",          // Root relative path for Vite proxy
   defaultVoiceId: "en-US-natalie",
   defaultLang: "hi-IN",
-  autoDetect: true,
-  maxChars: 3000,
+  autoDetect: true,        // Enable Hinglish detection
+  maxChars: 3000,          // Maximum characters for synthesis
+  latencyWarning: 500,     // Highlight if synthesis takes too long
 };
 
 // ─── State ──────────────────────────────────────────────
