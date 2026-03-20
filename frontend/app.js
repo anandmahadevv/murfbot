@@ -152,13 +152,14 @@ async function onTextInput() {
 }
 
 function detectLanguageLocal(text) {
-  const hindiChars = [...text].filter(c => c >= '\u0900' && c <= '\u097F').length;
-  const alphaChars = [...text].filter(c => /[a-zA-Z\u0900-\u097F]/.test(c)).length;
-  if (alphaChars === 0) return { lang: "en-US", label: "English", icon: "🇺🇸" };
-  const ratio = hindiChars / alphaChars;
-  if (ratio > 0.7)  return { lang: "hi-IN",        label: "Hindi",        icon: "🇮🇳" };
-  if (ratio > 0.05) return { lang: "multilingual",  label: "Multilingual", icon: "🌐" };
-  return { lang: "en-US", label: "English", icon: "🇺🇸" };
+  const hindiCount = (text.match(/[\u0900-\u097F]/g) || []).length;
+  const alphaCount = (text.match(/[a-zA-Z]/g) || []).length;
+  const total = hindiCount + alphaCount;
+  if (total === 0) return { lang: "en-US", label: "English 🇺🇸", icon: "🇺🇸" };
+  const ratio = hindiCount / total;
+  if (ratio > 0.8)  return { lang: "hi-IN",        label: "Hindi 🇮🇳",        icon: "🇮🇳" };
+  if (ratio > 0.1) return { lang: "multilingual",  label: "Multilingual 🌐", icon: "🌐" };
+  return { lang: "en-US", label: "English 🇺🇸", icon: "🇺🇸" };
 }
 
 function updateDetectPill({ lang, label, icon }) {
