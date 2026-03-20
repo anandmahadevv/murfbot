@@ -221,6 +221,7 @@ async function handleSpeak() {
     }
 
     const latency = Math.round(performance.now() - t0);
+    console.log(`[VoxAI] Synthesis completed in ${latency}ms`);
     state.lastLatency = latency;
     state.requestCount++;
     state.totalChars += text.length;
