@@ -530,6 +530,11 @@ function initSpeechRecognition() {
     return;
   }
 
+  // Warn if not a secure context
+  if (!window.isSecureContext) {
+    console.warn("Speech recognition may require an HTTPS connection to function reliably.");
+  }
+
   state.recognition = new SR();
   state.recognition.continuous     = false;
   state.recognition.interimResults  = true;
