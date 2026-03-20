@@ -160,8 +160,9 @@ def synthesize():
             except Exception:
                 err_detail = {"raw": response.text}
             return jsonify({
-                "error":    f"Murf API error: {response.status_code}",
-                "detail":   err_detail
+                "error":    f"Synthesis failed: {response.status_code}",
+                "detail":   err_detail,
+                "suggestion": "Check your Murf API quota and key validity."
             }), response.status_code
 
     except requests.exceptions.Timeout:
