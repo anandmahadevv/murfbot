@@ -185,6 +185,7 @@ async function handleSpeak() {
   const style    = el.styleSelect.value;
 
   setGeneratingState(true);
+  showToast("Sending request to Murf AI...", "info");
   const t0 = performance.now();
 
   try {
