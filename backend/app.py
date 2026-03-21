@@ -82,7 +82,7 @@ def get_voices():
     Fetch available Falcon voices from Murf API.
     Supports on-demand API key override via X-Murf-Key header.
     """
-    logger.info("Handling request to /api/voices")
+    logger.info("Handling request to /api/voices - fetching Falcon voices")
     try:
         request_key = request.headers.get("X-Murf-Key")
         response = requests.get(
