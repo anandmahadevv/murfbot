@@ -90,7 +90,7 @@ function attachEventListeners() {
   el.clearHistoryBtn.addEventListener("click", clearHistory);
   el.mainOrb.addEventListener("click", () => el.speakBtn.click());
 
-  el.textInput.addEventListener("input", onTextInput);
+  el.textInput.addEventListener("input", debounce(onTextInput, 400));
   el.textInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
@@ -128,6 +128,15 @@ function attachEventListeners() {
   el.apiKeyInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") saveAndConnect();
   });
+}
+
+/** Utility: Debounce function to limit execution rate */
+function debounce(fn, ms) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), ms);
+  };
 }
 
 // ─── Text Input Handler ───────────────────────────────────
