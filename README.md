@@ -15,6 +15,7 @@ A premium, real-time AI voice assistant demo powered by **Murf AI’s Falcon mod
 - **✨ Premium UI/UX**: Futuristic glassmorphism design with interactive particle systems and real-time audio waveforms.
 - **🎤 Speech Recognition**: Supports speech-to-text (STT) for hands-free voice-to-voice interaction.
 - **🌊 Low Latency Scaling**: Handle enterprise-grade concurrency via Murf's scalable API.
+- **⚡ Pro Streaming Engine**: Real-time audio data streaming (16kb chunks) for ultra-fast playback.
 - **🔒 Backend Secured**: API keys are managed safely in the environment, keeping them hidden from the client-side.
 
 ---
@@ -56,6 +57,11 @@ pip install -r backend/requirements.txt
 npm start
 ```
 Visit app at: **[http://localhost:3000](http://localhost:3000)**
+
+### 💡 Troubleshooting
+- **API Errors**: If synthesis fails, verify your Murf AI quota. Falcon models require specific v1 API keys.
+- **CORS Issues**: Ensure the backend (5000) and frontend (3000) are both running if you aren't using the Vite proxy.
+- **Python requirements**: Run `pip install -r backend/requirements.txt` to resolve missing `flask` or `requests` modules.
 
 ---
 
