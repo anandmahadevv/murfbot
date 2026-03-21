@@ -26,6 +26,7 @@ MURF_API_KEY = os.environ.get("MURF_API_KEY", "")
 MURF_BASE_URL = "https://api.murf.ai/v1"
 
 # Validate API key configuration on startup
+logger.info("Starting backend environment validation...")
 if not MURF_API_KEY:
     logger.warning("MURF_API_KEY not found in environment. backend will run with limited functionality.")
 else:
