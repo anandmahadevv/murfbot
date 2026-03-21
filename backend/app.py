@@ -3,9 +3,21 @@ from flask_cors import CORS
 import requests
 import os
 import json
+import logging
+import uuid
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
+
+START_TIME = datetime.now()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app, origins=["*"])
@@ -13,12 +25,19 @@ CORS(app, origins=["*"])
 MURF_API_KEY = os.environ.get("MURF_API_KEY", "")
 MURF_BASE_URL = "https://api.murf.ai/v1"
 
+# Validate API key configuration on startup
+if not MURF_API_KEY:
+    logger.warning("MURF_API_KEY not found in environment. backend will run with limited functionality.")
+else:
+    logger.info("MURF_API_KEY detected successfully.")
+
 def get_headers(request_key=None):
     key = request_key or MURF_API_KEY
     return {
         "api-key": key,
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "X-Request-ID": str(uuid.uuid4())
     }
 
 # Voice configurations for Hindi and English
@@ -40,9 +59,11 @@ VOICE_OPTIONS = {
 
 @app.route("/api/health", methods=["GET"])
 def health():
+    uptime = str(datetime.now() - START_TIME)
     return jsonify({
         "status": "ok", 
-        "service": "Murf AI Voice Assistant Backend",
+        "service": "VoxAI Backend",
+        "uptime": uptime,
         "apiKeyConfigured": bool(MURF_API_KEY)
     })
 
@@ -56,7 +77,11 @@ def get_config():
 
 @app.route("/api/voices", methods=["GET"])
 def get_voices():
-    """Fetch available Falcon voices from Murf API"""
+    """
+    Fetch available Falcon voices from Murf API.
+    Supports on-demand API key override via X-Murf-Key header.
+    """
+    logger.info("Handling request to /api/voices")
     try:
         request_key = request.headers.get("X-Murf-Key")
         response = requests.get(
@@ -110,13 +135,17 @@ def synthesize():
     text     = data.get("text", "").strip()
     voice_id = data.get("voiceId", "en-US-natalie")
     language = data.get("language", "en-US")
-    model    = data.get("model", "GEN2")  # GEN2 or FALCON
+    model    = data.get("model", "GEN2")
     style    = data.get("style", "Conversational")
 
+    # Input validation
     if not text:
-        return jsonify({"error": "Text is required"}), 400
+        logger.warning("Empty text synthesis request received.")
+        return jsonify({"error": "Text content cannot be empty"}), 400
+    
     if len(text) > 3000:
-        return jsonify({"error": "Text too long (max 3000 characters)"}), 400
+        logger.warning(f"Synthesis text too long: {len(text)} chars")
+        return jsonify({"error": "Text segment exceeds maximum allowed length of 3000 characters"}), 400
 
     payload = {
         "text":       text,
@@ -159,6 +188,9 @@ def synthesize():
                 err_detail = response.json()
             except Exception:
                 err_detail = {"raw": response.text}
+            
+            logger.error(f"Synthesis failed: {response.status_code} - {err_detail}")
+            
             return jsonify({
                 "error":    f"Synthesis failed: {response.status_code}",
                 "detail":   err_detail,
@@ -213,7 +245,8 @@ def synthesize_stream():
 
         if resp.status_code == 200:
             def generate():
-                for chunk in resp.iter_content(chunk_size=4096):
+                # Stream in 8kb chunks for optimal overhead balance
+                for chunk in resp.iter_content(chunk_size=8192):
                     if chunk:
                         yield chunk
 
