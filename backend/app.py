@@ -205,7 +205,8 @@ def synthesize():
     except requests.exceptions.ConnectionError:
         return jsonify({"error": "Cannot connect to Murf API. Check your internet connection."}), 503
     except Exception as e:
-        return jsonify({"error": f"Internal error: {str(e)}"}), 500
+        logger.error(f"Internal synthesis error: {str(e)}")
+        return jsonify({"error": f"Internal error during synthesis: {str(e)}"}), 500
 
 
 @app.route("/api/synthesize/stream", methods=["POST"])
