@@ -246,8 +246,8 @@ def synthesize_stream():
 
         if resp.status_code == 200:
             def generate():
-                # Stream in 8kb chunks for optimal overhead balance
-                for chunk in resp.iter_content(chunk_size=8192):
+                # Stream in 16kb chunks for optimal throughput on low-latency connections
+                for chunk in resp.iter_content(chunk_size=16384):
                     if chunk:
                         yield chunk
 
