@@ -34,11 +34,13 @@ else:
 
 def get_headers(request_key=None):
     key = request_key or MURF_API_KEY
+    rid = str(uuid.uuid4())
+    logger.info(f"Generating headers for request: {rid}")
     return {
         "api-key": key,
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "X-Request-ID": str(uuid.uuid4())
+        "X-Request-ID": rid
     }
 
 # Voice configurations for Hindi and English
