@@ -24,6 +24,7 @@ CORS(app, origins=["*"])
 
 MURF_API_KEY = os.environ.get("MURF_API_KEY", "")
 MURF_BASE_URL = "https://api.murf.ai/v1"
+DEFAULT_MODEL = "FALCON"
 
 # Validate API key configuration on startup
 logger.info("Starting backend environment validation...")
