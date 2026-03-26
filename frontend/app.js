@@ -88,6 +88,7 @@ function attachEventListeners() {
   el.downloadBtn.addEventListener("click", downloadAudio);
   el.replayBtn.addEventListener("click", () => el.audioElement.play());
   el.clearHistoryBtn.addEventListener("click", clearHistory);
+  el.clearBtn.addEventListener("click", clearInput);
   el.mainOrb.addEventListener("click", () => el.speakBtn.click());
 
   el.textInput.addEventListener("input", debounce(onTextInput, 400));
@@ -562,12 +563,15 @@ function clearHistory() {
 }
 
 function clearInput() {
+  if (!el.textInput.value) return;
   el.textInput.value = "";
   el.charCount.textContent = "0";
+  el.charCount.classList.remove("limit-exceeded");
   el.detectPill.classList.remove("detected");
   el.detectIcon.textContent  = "🌐";
   el.detectLabel.textContent = "Auto-detect";
   el.textInput.focus();
+  showToast("Input cleared", "info");
 }
 
 // ─── Speech Recognition (STT) ─────────────────────────────
