@@ -128,6 +128,18 @@ function attachEventListeners() {
   el.apiKeyInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") saveAndConnect();
   });
+
+  // Player speed controls
+  document.querySelectorAll(".speed-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const speed = parseFloat(btn.dataset.speed);
+      el.audioElement.playbackRate = speed;
+      
+      // Update UI active state
+      document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
 }
 
 /** Utility: Debounce function to limit execution rate */

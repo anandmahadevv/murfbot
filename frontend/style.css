@@ -1066,3 +1066,37 @@ audio {
   white-space: nowrap;
   border: 0;
 }
+
+/* Audio Player Extra Styles */
+.player-speed-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  background: rgba(255,255,255,0.05);
+  padding: 0.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-border);
+}
+
+.speed-btn {
+  background: none;
+  border: none;
+  color: var(--clr-text-3);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.speed-btn:hover {
+  color: var(--clr-text-2);
+}
+
+.speed-btn.active {
+  background: var(--clr-primary);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(124,58,237,0.3);
+}
