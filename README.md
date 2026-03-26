@@ -29,6 +29,20 @@ A premium, real-time AI voice assistant demo powered by **Murf AI’s Falcon mod
 
 ---
 
+## ⚙️ Technical Implementation
+
+### Dual-Path Synthesis
+VoxAI implements a dual-path architecture to balance high-quality studio voices with ultra-low latency conversational needs:
+1. **Dynamic Generation (REST)**: Recommended for lengthier, high-fidelity responses (Gen2 Studio Models).
+2. **Falcon Streaming Interface**: Optimized for real-time interactivity, leveraging a 16kb-chunked streaming proxy to reduce Time-To-First-Byte (TTFB) to under **130ms**.
+
+### Language Selection Logic
+The application uses a hybrid approach for multilingual support:
+- **Client-Side Heuristics**: Immediate feedback on character counts and Unicode-based script detection (Hindi vs. Latin).
+- **Multi-Native Locale Configuration**: Backend intelligently sets `multiNativeLocale` flags when "Hinglish" or "Hindi" is detected, ensuring natural accentuation across mixed-language sentences.
+
+---
+
 ## 🏃 Quick Start
 
 ### 1. Prerequisites
