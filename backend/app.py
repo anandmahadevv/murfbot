@@ -169,6 +169,8 @@ def synthesize():
 
     try:
         request_key = request.headers.get("X-Murf-Key")
+        logger.info(f"Initiating synthesis for {len(text)} characters with voice {voice_id} ({language})")
+        
         response = requests.post(
             f"{MURF_BASE_URL}/speech/generate",
             headers=get_headers(request_key),
@@ -179,6 +181,7 @@ def synthesize():
         if response.status_code == 200:
             result = response.json()
             audio_url = result.get("audioFile") or result.get("audio_file") or result.get("url")
+            logger.info("Synthesis successful. Audio URL generated.")
             return jsonify({
                 "success":   True,
                 "audioUrl":  audio_url,
@@ -193,20 +196,23 @@ def synthesize():
             except Exception:
                 err_detail = {"raw": response.text}
             
-            logger.error(f"Synthesis failed: {response.status_code} - {err_detail}")
+            logger.error(f"Murf API Error ({response.status_code}): {err_detail}")
             
             return jsonify({
                 "error":    f"Synthesis failed: {response.status_code}",
                 "detail":   err_detail,
-                "suggestion": "Check your Murf API quota and key validity."
+                "message":  err_detail.get("message", "An unexpected error occurred with the Murf API."),
+                "suggestion": "Check your Murf API quota, key validity, and network status."
             }), response.status_code
 
     except requests.exceptions.Timeout:
+        logger.error("Synthesis request timed out.")
         return jsonify({"error": "Request timed out. Please try again."}), 504
     except requests.exceptions.ConnectionError:
+        logger.error("Failed to connect to Murf API.")
         return jsonify({"error": "Cannot connect to Murf API. Check your internet connection."}), 503
     except Exception as e:
-        logger.error(f"Internal synthesis error: {str(e)}")
+        logger.exception("Internal synthesis error occurred")
         return jsonify({"error": f"Internal error during synthesis: {str(e)}"}), 500
 
 
