@@ -158,6 +158,13 @@ async function onTextInput() {
     const detected = detectLanguageLocal(text);
     updateDetectPill(detected);
   }
+
+  // Visual warning for character limit
+  if (len > CONFIG.maxChars) {
+    el.charCount.classList.add("limit-exceeded");
+  } else {
+    el.charCount.classList.remove("limit-exceeded");
+  }
 }
 
 function detectLanguageLocal(text) {
@@ -184,6 +191,11 @@ async function handleSpeak() {
   if (!text) {
     showToast("Please enter some text to convert to speech.", "warn");
     el.textInput.focus();
+    return;
+  }
+
+  if (text.length > CONFIG.maxChars) {
+    showToast(`Text is too long! Please limit to ${CONFIG.maxChars} characters.`, "error");
     return;
   }
 

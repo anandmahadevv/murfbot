@@ -741,6 +741,19 @@ body {
   font-size: 0.7rem;
   color: var(--clr-text-3);
   pointer-events: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.char-count.limit-exceeded {
+  color: var(--clr-danger) !important;
+  font-weight: 700;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 .input-actions {
