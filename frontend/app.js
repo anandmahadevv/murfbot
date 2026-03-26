@@ -28,6 +28,7 @@ const state = {
   totalChars: 0,
   lastLatency: null,
   conversationHistory: [],
+  sessionStart: Date.now(),
   recognition: null,
   audioCtx: null,
   analyser: null,
@@ -66,6 +67,7 @@ const el = {
   statRequests:     $("statRequests"),
   statChars:        $("statChars"),
   statLang:         $("statLang"),
+  statTimer:        $("statTimer"),
   clearHistoryBtn:  $("clearHistoryBtn"),
   waveCanvas:       $("waveCanvas"),
   particleCanvas:   $("particleCanvas"),
@@ -79,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadSavedApiKey();
   fetchVoices();
   attachEventListeners();
+  startSessionTimer();
 });
 
 // ─── Event Listeners ─────────────────────────────────────
@@ -419,6 +422,15 @@ function updateStats(latency) {
   el.statLatency.textContent  = latency;
   el.statRequests.textContent = state.requestCount;
   el.statChars.textContent    = state.totalChars;
+}
+
+function startSessionTimer() {
+  setInterval(() => {
+    const diff = Math.floor((Date.now() - state.sessionStart) / 1000);
+    const m = Math.floor(diff / 60);
+    const s = diff % 60;
+    el.statTimer.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+  }, 1000);
 }
 
 // ─── Audio Player ─────────────────────────────────────────
