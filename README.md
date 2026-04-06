@@ -107,4 +107,12 @@ This project was developed for the **Murf AI Hackathon** to demonstrate the feas
 - [ ] **Advanced Voice Cloning**: Use Murf's premium voice cloning for personalized UX.
 
 ---
-*Created by [Anand Mahadev](https://github.com/anandmahadev) for Murf AI Hackathon 2026.*
+## 📬 Contact & Support
+
+If you have any questions, feel free to reach out:
+- **GitHub**: [@anandmahadev](https://github.com/anandmahadev)
+- **LinkedIn**: [Anand Mahadev](https://linkedin.com/in/anandmahadev)
+- **Email**: anandmahadev.dev@gmail.com
+
+---
+*Created by [Anand Mahadev](https://github.com/anandmahadev) for Murf AI Hackathon 2026. Built with ❤️ and AI.*
