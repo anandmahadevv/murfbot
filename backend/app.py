@@ -7,6 +7,7 @@ import logging
 import uuid
 from datetime import datetime
 from dotenv import load_dotenv
+from constants import VOICE_OPTIONS, MURF_BASE_URL, DEFAULT_MODEL, MAX_TEXT_LENGTH
 
 load_dotenv()
 
@@ -23,8 +24,6 @@ app = Flask(__name__)
 CORS(app, origins=["*"])
 
 MURF_API_KEY = os.environ.get("MURF_API_KEY", "")
-MURF_BASE_URL = "https://api.murf.ai/v1"
-DEFAULT_MODEL = "FALCON"
 
 # Validate API key configuration on startup
 logger.info("Starting backend environment validation...")
@@ -44,21 +43,7 @@ def get_headers(request_key=None):
         "X-Request-ID": rid
     }
 
-# Voice configurations for Hindi and English
-VOICE_OPTIONS = {
-    "en-US": {
-        "female": {"voiceId": "en-US-natalie", "name": "Natalie (English US - Female)"},
-        "male":   {"voiceId": "en-US-marcus",  "name": "Marcus (English US - Male)"},
-    },
-    "en-IN": {
-        "female": {"voiceId": "en-IN-isha",    "name": "Isha (English India - Female)"},
-        "male":   {"voiceId": "en-IN-arjun",   "name": "Arjun (English India - Male)"},
-    },
-    "hi-IN": {
-        "female": {"voiceId": "hi-IN-divya",   "name": "Divya (Hindi - Female)"},
-        "male":   {"voiceId": "hi-IN-aryan",   "name": "Aryan (Hindi - Male)"},
-    },
-}
+# (Voice options moved to constants.py)
 
 
 @app.route("/api/health", methods=["GET"])
@@ -157,9 +142,9 @@ def synthesize():
         logger.warning("Empty text synthesis request received.")
         return jsonify({"error": "Text content cannot be empty"}), 400
     
-    if len(text) > 3000:
+    if len(text) > MAX_TEXT_LENGTH:
         logger.warning(f"Synthesis text too long: {len(text)} chars")
-        return jsonify({"error": "Text segment exceeds maximum allowed length of 3000 characters"}), 400
+        return jsonify({"error": f"Text segment exceeds maximum allowed length of {MAX_TEXT_LENGTH} characters"}), 400
 
     payload = {
         "text":       text,
