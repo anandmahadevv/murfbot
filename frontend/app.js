@@ -13,6 +13,15 @@ const CONFIG = {
   autoDetect: true,        // Enable Hinglish detection
   maxChars: 3000,          // Maximum characters for synthesis
   latencyWarning: 500,     // Highlight if synthesis takes too long
+  debug: true,             // Enable detailed console logging
+};
+
+// ─── Logger Utility ──────────────────────────────────────
+const logger = {
+  info:  (msg, data) => CONFIG.debug && console.log(`%c[VoxAI] INFO: ${msg}`, 'color: #06b6d4', data || ""),
+  warn:  (msg, data) => console.warn(`[VoxAI] WARN: ${msg}`, data || ""),
+  error: (msg, err)  => console.error(`[VoxAI] ERROR: ${msg}`, err || ""),
+  trace: (msg, data) => CONFIG.debug && console.debug(`[VoxAI] TRACE: ${msg}`, data || ""),
 };
 
 // ─── State ──────────────────────────────────────────────
