@@ -306,6 +306,12 @@ def detect_language():
 
 
 if __name__ == "__main__":
-    print("Murf AI Voice Assistant Backend starting...")
-    print(f"   API Key configured: {'YES' if MURF_API_KEY != 'YOUR_MURF_API_KEY_HERE' else 'NO - set MURF_API_KEY env var'}")
+    print("\n" + "="*50)
+    print("      🎙️  VoxAI - Multilingual Backend Engine  🎙️")
+    print("="*50)
+    print(f"[*] API Key status:  {'[OK] Configured' if MURF_API_KEY else '[!!] Missing'}")
+    print(f"[*] Base URL:        {MURF_BASE_URL}")
+    print(f"[*] Default Model:   {DEFAULT_MODEL}")
+    print(f"[*] Listening on:    http://0.0.0.0:5000")
+    print("="*50 + "\n")
     app.run(host="0.0.0.0", port=5000, debug=True)
