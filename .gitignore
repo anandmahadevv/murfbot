@@ -1,6 +1,33 @@
-.env  
-node_modules  
-venv  
-__pycache__  
-.DS_Store  
-dist 
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+venv/
+env/
+ENV/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# OS & Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build & Distributions
+dist/
+build/
+*.egg-info/
+.parcel-cache/
+.next/
+out/
