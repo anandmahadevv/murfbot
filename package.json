@@ -2,11 +2,15 @@
   "name": "voxai-multilingual-voice-assistant",
   "version": "1.1.0",
   "description": "Real-time Multilingual AI Voice Assistant powered by Murf AI Falcon model",
+  "author": "Anand Mahadev <anandmahadev.dev@gmail.com> (https://github.com/anandmahadev)",
+  "license": "MIT",
+  "keywords": ["AI", "Voice", "MurfAI", "Multilingual", "Hindi", "Voice-over"],
   "scripts": {
     "dev": "vite frontend --port 3000 --open",
     "build": "vite build frontend",
     "preview": "vite preview",
     "backend": "python backend/app.py",
+    "test:backend": "python backend/test_api.py",
     "start": "concurrently \"npm run backend\" \"npm run dev\""
   },
   "devDependencies": {
