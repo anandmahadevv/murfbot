@@ -63,6 +63,11 @@ VOICE_OPTIONS = {
 
 @app.route("/api/health", methods=["GET"])
 def health():
+    """
+    Check the health status of the backend API.
+    Returns:
+        JSON response with status, service name, uptime, and API key configuration state.
+    """
     uptime = str(datetime.now() - START_TIME)
     return jsonify({
         "status": "ok", 
@@ -74,6 +79,11 @@ def health():
 
 @app.route("/api/config", methods=["GET"])
 def get_config():
+    """
+    Expose public configuration flags to the frontend.
+    Returns:
+        JSON: { "apiKeyConfigured": bool }
+    """
     return jsonify({
         "apiKeyConfigured": bool(MURF_API_KEY)
     })
