@@ -1,6 +1,7 @@
 /* =====================================================
    VoxAI – Main Application Logic
    Multilingual AI Voice Assistant | Murf AI Integration
+   Version: 1.1.0 (Falcon Support)
    ===================================================== */
 
 "use strict";
@@ -82,7 +83,11 @@ const el = {
   particleCanvas:   $("particleCanvas"),
 };
 
-// ─── Init ────────────────────────────────────────────────
+/**
+ * DOM Lifecycle Initialization
+ * Orchestrates the startup sequence, including canvas setup, STT, 
+ * and configuration fetching.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   initParticleBackground();
   initIdleWave();
@@ -93,7 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
   startSessionTimer();
 });
 
-// ─── Event Listeners ─────────────────────────────────────
+/**
+ * Global Event Delegation
+ * Binds DOM events to application handlers for seamless interaction.
+ */
 function attachEventListeners() {
   el.speakBtn.addEventListener("click", handleSpeak);
   el.micBtn.addEventListener("click", toggleRecording);
@@ -192,6 +200,13 @@ async function onTextInput() {
   }
 }
 
+/**
+ * Heuristic Language Detection
+ * Analyzes the ratio of Hindi to Latin characters to suggest the appropriate Murf AI locale.
+ * 
+ * @param {string} text - The input string to analyze.
+ * @returns {object} { lang, label, icon } detected metadata.
+ */
 function detectLanguageLocal(text) {
   const hindiCount = (text.match(/[\u0900-\u097F]/g) || []).length;
   const alphaCount = (text.match(/[a-zA-Z]/g) || []).length;
@@ -292,6 +307,7 @@ async function handleSpeak() {
     showToast(msg, "error");
     setOrbState("idle", "Ready to speak");
   } finally {
+    // TODO: Implement exponential backoff for transient synthesis failures
     setGeneratingState(false);
   }
 }
