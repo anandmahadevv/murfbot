@@ -21,4 +21,11 @@ We will acknowledge your report within 48 hours and provide a timeline for a fix
 
 ## Backend Security
 
-VoxAI uses a backend proxy to protect Murf AI API keys. Never commit your `.env` file to version control.
+VoxAI implements a robust backend proxy architecture to protect sensitive credentials, including Murf AI API keys. 
+
+- **Environment Variables**: Always use `.env` files for key storage.
+- **Git Safety**: The project includes a `.gitignore` to prevent accidental commits of `.env`.
+- **API Masking**: The frontend never interacts directly with Murf AI endpoints, ensuring that API keys are never exposed in the browser's network tab.
+
+---
+*Last Updated: April 2026*
