@@ -1,5 +1,11 @@
-# Voice configurations for Hindi and English
-VOICE_OPTIONS = {
+"""
+Global Configuration Constants for VoxAI
+Defines voice mappings, API endpoints, and system-wide limits.
+"""
+from typing import Dict, Any
+
+# Primary voice selection map structured by locale and gender
+VOICE_OPTIONS: Dict[str, Dict[str, Dict[str, str]]] = {
     "en-US": {
         "female": {"voiceId": "en-US-natalie", "name": "Natalie (English US - Female)"},
         "male":   {"voiceId": "en-US-marcus",  "name": "Marcus (English US - Male)"},
