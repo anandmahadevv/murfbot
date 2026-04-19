@@ -76,6 +76,21 @@ body {
   line-height: 1.6;
 }
 
+/* --- Custom Scrollbar --- */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: var(--clr-border-hi);
+  border-radius: 10px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary-lt);
+}
+
 /* --- Background Canvas --- */
 .bg-canvas {
   position: fixed;
@@ -1123,4 +1138,18 @@ audio {
   background: var(--clr-primary);
   color: #fff;
   box-shadow: 0 0 10px rgba(124,58,237,0.3);
+}
+
+/* --- Footer --- */
+.app-footer {
+  text-align: center;
+  padding: var(--space-md);
+  color: var(--clr-text-3);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--clr-border);
+  margin-top: auto;
+}
+
+.app-footer b {
+  color: var(--clr-text-2);
 }
