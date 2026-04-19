@@ -13,6 +13,11 @@ Thank you for your interest in contributing to VoxAI! We welcome all contributio
 - **Python**: Follow PEP 8 guidelines. Use type hints where possible.
 - **Frontend**: Use semantic HTML and maintain the Design System defined in `style.css`.
 - **Commits**: Use professional, descriptive commit messages (Conventional Commits style).
+- **Branches**: Follow a consistent naming pattern:
+    - `feature/description` for new features.
+    - `fix/bug-description` for bug fixes.
+    - `docs/documentation-update` for documentation changes.
+    - `refactor/logic-change` for code improvements.
 
 ## License
 By contributing, you agree that your contributions will be licensed under the project's license.
