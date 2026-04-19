@@ -9,6 +9,8 @@ from datetime import datetime
 from dotenv import load_dotenv
 from constants import VOICE_OPTIONS, MURF_BASE_URL, DEFAULT_MODEL, MAX_TEXT_LENGTH
 
+__version__ = "1.1.0"
+
 load_dotenv()
 
 START_TIME = datetime.now()
@@ -33,6 +35,15 @@ else:
     logger.info("MURF_API_KEY detected successfully.")
 
 def get_headers(request_key=None):
+    """
+    Construct the standard header set for Murf AI API requests.
+    
+    Args:
+        request_key (str, optional): An override API key if provided by the client.
+        
+    Returns:
+        dict: A dictionary containing authentication and content headers.
+    """
     key = request_key or MURF_API_KEY
     rid = str(uuid.uuid4())
     logger.info(f"Generating headers for request: {rid}")
@@ -57,6 +68,7 @@ def health():
     return jsonify({
         "status": "ok", 
         "service": "VoxAI Backend",
+        "version": __version__,
         "uptime": uptime,
         "apiKeyConfigured": bool(MURF_API_KEY)
     })
@@ -111,6 +123,12 @@ def get_voices():
 
 
 def get_fallback_voices():
+    """
+    Provide a hardcoded list of high-quality fallback voices in case of API failure.
+    
+    Returns:
+        list: A list of voice configuration dictionaries.
+    """
     voices = []
     for locale, genders in VOICE_OPTIONS.items():
         for gender, info in genders.items():
