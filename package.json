@@ -4,7 +4,12 @@
   "description": "Real-time Multilingual AI Voice Assistant powered by Murf AI Falcon model",
   "author": "Anand Mahadev <anandmahadev.dev@gmail.com> (https://github.com/anandmahadev)",
   "license": "MIT",
-  "keywords": ["AI", "Voice", "MurfAI", "Multilingual", "Hindi", "Voice-over"],
+  "keywords": ["AI", "Voice", "MurfAI", "Multilingual", "Hindi", "Voice-over", "Real-time", "Falcon", "Hinglish"],
+  "homepage": "https://github.com/anandmahadev/Murf.bot#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anandmahadev/Murf.bot.git"
+  },
   "scripts": {
     "dev": "vite frontend --port 3000 --open",
     "build": "vite build frontend",
