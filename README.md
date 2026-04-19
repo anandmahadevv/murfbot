@@ -12,7 +12,7 @@ A premium, real-time AI voice assistant demo powered by **Murf AI’s Falcon mod
 
 - **🚀 Falcon Engine Support**: Experience conversational AI with sub-130ms latency for a true real-time feel.
 - **🇮🇳 Multilingual Mastery**: Switch between Hindi, English (US/IN), or mix both in the same sentence.
-- **✨ Premium UI/UX**: Futuristic glassmorphism design with interactive particle systems and real-time audio waveforms.
+- **✨ Premium UI/UX**: Futuristic glassmorphism design with interactive particle systems, real-time audio waveforms, and branding footer.
 - **🎤 Speech Recognition**: Supports speech-to-text (STT) for hands-free voice-to-voice interaction.
 - **🌊 Low Latency Scaling**: Handle enterprise-grade concurrency via Murf's scalable API.
 - **⚡ Pro Streaming Engine**: Real-time audio data streaming (16kb chunks) for ultra-fast playback.
@@ -40,6 +40,16 @@ VoxAI implements a dual-path architecture to balance high-quality studio voices 
 The application uses a hybrid approach for multilingual support:
 - **Client-Side Heuristics**: Immediate feedback on character counts and Unicode-based script detection (Hindi vs. Latin).
 - **Multi-Native Locale Configuration**: Backend intelligently sets `multiNativeLocale` flags when "Hinglish" or "Hindi" is detected, ensuring natural accentuation across mixed-language sentences.
+
+---
+
+## 🧩 How it Works
+
+1. **User Input**: Text is entered or captured via STT in the browser.
+2. **Detection**: Script-based heuristics detect language (Hindi/English/Mix).
+3. **Synthesis**: The request is proxied through our Python backend to Murf AI.
+4. **Streaming**: High-performance streaming proxy delivers audio chunks in real-time.
+5. **Playback**: Browser plays the audio with a synchronized waveform visualizer.
 
 ---
 
