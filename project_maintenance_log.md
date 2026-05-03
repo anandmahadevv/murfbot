@@ -12,3 +12,4 @@
 - [2026-05-03 20:54:16] style: organize imports to adhere to project rules
 - [2026-05-03 20:54:17] refactor: rename variables for better code clarity
 - [2026-05-03 20:54:18] docs: clarify deployment process in developer guide
+- [2026-05-03 20:54:19] chore: remove unused dummy data and variables
