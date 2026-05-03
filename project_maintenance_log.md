@@ -21,3 +21,4 @@
 - [2026-05-03 20:54:23] refactor: decouple config logic from application core
 - [2026-05-03 20:54:24] docs: provide examples for component usage
 - [2026-05-03 20:54:25] chore: prepare setup for pre-commit hooks
+- [2026-05-03 20:54:27] style: enforce strict typings in generic objects
