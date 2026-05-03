@@ -15,3 +15,4 @@
 - [2026-05-03 20:54:19] chore: remove unused dummy data and variables
 - [2026-05-03 20:54:19] style: apply consistent formatting in scripts
 - [2026-05-03 20:54:20] refactor: optimize loop performance in data parsing
+- [2026-05-03 20:54:21] docs: add missing annotations to core services
