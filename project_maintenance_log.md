@@ -9,3 +9,4 @@
 - [2026-05-03 20:54:12] refactor: extract redundant code into a helper
 - [2026-05-03 20:54:13] docs: improve API endpoint documentation
 - [2026-05-03 20:54:15] chore: standardize error message formatting
+- [2026-05-03 20:54:16] style: organize imports to adhere to project rules
