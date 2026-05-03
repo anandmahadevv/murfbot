@@ -11,3 +11,4 @@
 - [2026-05-03 20:54:15] chore: standardize error message formatting
 - [2026-05-03 20:54:16] style: organize imports to adhere to project rules
 - [2026-05-03 20:54:17] refactor: rename variables for better code clarity
+- [2026-05-03 20:54:18] docs: clarify deployment process in developer guide
